@@ -29,10 +29,10 @@ class AtractivosController extends Controller
     public function store(Request $request)
     {
         try {
-            $user = Auth::user();
-            if ($user->rol == 'turista') {
-                return response()->json(["mensaje" => "usuario no autorizado"], 401);
-            }
+            // $user = Auth::user();
+            // if ($user->rol == 'turista') {
+            //     return response()->json(["mensaje" => "usuario no autorizado"], 401);
+            // }
 
             $request -> validate([
                 'nombre' => 'required',
@@ -41,15 +41,24 @@ class AtractivosController extends Controller
                 'imagen' => 'required',
             ]);
 
-            $image = $request->file('imagen');
-            $nombreImagen = $image->getClientOriginalName();
-            $image -> move(public_path('images'), $nombreImagen);
+            // $image = $request->file('imagen');
+            // $nombreImagen = $image->getClientOriginalName();
+            // $image -> move(public_path('images'), $nombreImagen);
 
+            // $atractivo = Atractivo::create([
+            //     'nombre' => $request->nombre,
+            //     'descripcion' => $request->descripcion,
+            //     'municipio' => $request->municipio,
+            //     'imagen' => $nombreImagen,
+            //     'estado' => 1
+            // ]);
+
+            
             $atractivo = Atractivo::create([
                 'nombre' => $request->nombre,
                 'descripcion' => $request->descripcion,
                 'municipio' => $request->municipio,
-                'imagen' => $nombreImagen,
+                'imagen' => $request->imagen,
                 'estado' => 1
             ]);
 
@@ -58,13 +67,13 @@ class AtractivosController extends Controller
                 'nombre' => $atractivo->nombre,
                 'descripcion' => $atractivo->descripcion,
                 'municipio' => $atractivo->municipio,
-                'imagen' => $nombreImagen
+                'imagen' => $atractivo->imagen
             ];
 
             return response()->json($response, 201);
 
         } catch (\Exception $e) {
-            return response()->json(["mensaje" => "informacion no procesada"]);
+            return response()->json($e->getMessage());
         }
     }
 

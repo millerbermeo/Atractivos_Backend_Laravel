@@ -20,6 +20,7 @@ use App\Http\Controllers\LikesController;
 
 
 Route::prefix('v1')->group(function(){
+    Route::apiResource('atractivos', AtractivosController::class);
     Route::prefix('auth')->group(function(){
         Route::post('login', [AuthController::class, 'login']);
         Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -30,7 +31,7 @@ Route::prefix('v1')->group(function(){
     });
 
     Route::middleware('auth:sanctum')->group(function(){
-        Route::apiResource('atractivos', AtractivosController::class);
+        // Route::apiResource('atractivos', AtractivosController::class);
         // Route::post('likes/{idUsuario}/{idAtractivo', [LikesController::class, 'likes']);
     });
 
